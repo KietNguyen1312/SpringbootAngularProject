@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.INTERNAL_SERVER_ERROR;
 
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("${api.prefiix}/images/")
+@RequestMapping("${api.prefix}/images/")
 public class ImageController {
     private final IImageService imageService;
 
@@ -36,7 +36,7 @@ public class ImageController {
         }
     }
 
-    @GetMapping("/image/download/{id}")
+    @GetMapping("/download/{id}")
     public ResponseEntity<Resource> downloadImage(@PathVariable Long id) throws SQLException {
         Image image = imageService.getImageById(id);
         ByteArrayResource resource = new ByteArrayResource(image.getImage().getBytes(1, (int) image.getImage().length()));
@@ -45,7 +45,7 @@ public class ImageController {
                 .body(resource);
     }
 
-    @PutMapping("/image/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateImage(@PathVariable Long id, @RequestBody MultipartFile file) {
         try {
             Image image = imageService.getImageById(id);
@@ -60,7 +60,7 @@ public class ImageController {
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse("Image updated failed!", INTERNAL_SERVER_ERROR));
     }
 
-    @DeleteMapping("/image/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteImage(@PathVariable Long id) {
         try {
             Image image = imageService.getImageById(id);

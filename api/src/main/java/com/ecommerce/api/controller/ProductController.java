@@ -22,7 +22,7 @@ import static org.springframework.http.HttpStatus.*;
 public class ProductController {
     private final IProductService productService;
 
-    @GetMapping("/product")
+    @GetMapping("/")
     public ResponseEntity<ApiResponse> getAllProducts() {
         try {
             List<Product> products = productService.getAllProducts();
@@ -32,7 +32,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/product/{id}")
+    @GetMapping("/{id}")
     public ResponseEntity<ApiResponse> getProductById(@PathVariable Long id) {
         try {
             Product product = productService.getProductById(id);
@@ -42,7 +42,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/product/by/{name}")
+    @GetMapping("/by/{name}")
     public ResponseEntity<ApiResponse> getProductByName(@PathVariable String name) {
         try {
             List<Product> products = productService.getProductsByName(name);
@@ -55,7 +55,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/product/{brand}")
+    @GetMapping("/{brand}")
     public ResponseEntity<ApiResponse> getProductByBrand(@PathVariable String brand) {
         try {
             List<Product> products = productService.getProductsByBrand(brand);
@@ -68,7 +68,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/product/{category}")
+    @GetMapping("/{category}")
     public ResponseEntity<ApiResponse> getProductByCategory(@PathVariable String category) {
         try {
             List<Product> products = productService.getProductsByCategory(category);
@@ -81,7 +81,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/product/by/brand_and_name}")
+    @GetMapping("/by/brand_and_name")
     public ResponseEntity<ApiResponse> getProductByBrandAndName(@RequestParam String brand, @RequestParam String name) {
         try {
             List<Product> products = productService.getProductsByBrandAndName(brand, name);
@@ -94,7 +94,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/product/category_and_brand")
+    @GetMapping("/category_and_brand")
     public ResponseEntity<ApiResponse> getProductByCategoryAndBrand(@RequestParam String category, @RequestParam String brand) {
         try {
             List<Product> products = productService.getProductsByCategoryAndBrand(category, brand);
@@ -107,7 +107,7 @@ public class ProductController {
         }
     }
 
-    @GetMapping("/product/countBy/brand_and_name")
+    @GetMapping("/countBy/brand_and_name")
     public ResponseEntity<ApiResponse> countProductByBrandAndName(@RequestParam String brand, @RequestParam String name) {
         try {
             var productCount = productService.countProductsByBrandAndName(brand, name);
@@ -116,7 +116,7 @@ public class ProductController {
             return ResponseEntity.ok(new ApiResponse(e.getMessage(), null));
         }
     }
-    @PostMapping("/product")
+    @PostMapping("/")
     public ResponseEntity<ApiResponse> addProduct(@RequestBody AddProductRequest product) {
         try {
             Product savedProduct = productService.addProduct(product);
@@ -126,7 +126,7 @@ public class ProductController {
         }
     }
 
-    @PutMapping("product/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<ApiResponse> updateProduct(@RequestBody UpdateProductRequest request, @PathVariable Long id) {
         try {
             Product savedProduct = productService.updateProduct(request,id);
@@ -136,11 +136,11 @@ public class ProductController {
         }
     }
 
-    @DeleteMapping("/product/{id}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<ApiResponse> deleteProduct(@PathVariable Long id) {
         try {
             productService.deleteProductById(id);
-            return ResponseEntity.ok(new ApiResponse("Deleted!", productService.getProductById(id)));
+            return ResponseEntity.ok(new ApiResponse("Deleted!", null));
         } catch (ResourceNotFoundException e) {
             return ResponseEntity.status(NOT_FOUND).body(new ApiResponse((e.getMessage()),null));
         }
