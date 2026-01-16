@@ -1,6 +1,7 @@
 package com.ecommerce.api.service.product;
 
 import com.ecommerce.api.exceptions.ProductNotFoundException;
+import com.ecommerce.api.exceptions.ResourceNotFoundException;
 import com.ecommerce.api.model.Category;
 import com.ecommerce.api.model.Product;
 import com.ecommerce.api.repository.CategoryRepository;
@@ -43,21 +44,21 @@ public class ProductService implements IProductService {
     @Override
     public Product getProductById(Long id) {
         return productRepository.findById(id)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
     }
 
     @Override
     public void deleteProductById(Long id) {
         productRepository.findById(id)
-                .ifPresentOrElse(productRepository::delete, () -> {throw new ProductNotFoundException("Product not found!");});
+                .ifPresentOrElse(productRepository::delete, () -> {throw new ResourceNotFoundException("Product not found!");});
     }
 
     @Override
-    public Product updateProduct(UpdateProductRequest request, Long productId) {
-        return productRepository.findById(productId)
+    public Product updateProduct(UpdateProductRequest request, Long id) {
+        return productRepository.findById(id)
                 .map(existingProduct -> updateExistingProduct(existingProduct,request))
                 .map(productRepository :: save)
-                .orElseThrow(() -> new ProductNotFoundException("Product not found!"));
+                .orElseThrow(() -> new ResourceNotFoundException("Product not found!"));
     }
 
     private Product updateExistingProduct(Product existingProduct, UpdateProductRequest request) {

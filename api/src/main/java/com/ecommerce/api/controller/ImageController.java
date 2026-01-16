@@ -36,21 +36,21 @@ public class ImageController {
         }
     }
 
-    @GetMapping("/image/download/{imageId}")
-    public ResponseEntity<Resource> downloadImage(@PathVariable Long imageId) throws SQLException {
-        Image image = imageService.getImageById(imageId);
+    @GetMapping("/image/download/{id}")
+    public ResponseEntity<Resource> downloadImage(@PathVariable Long id) throws SQLException {
+        Image image = imageService.getImageById(id);
         ByteArrayResource resource = new ByteArrayResource(image.getImage().getBytes(1, (int) image.getImage().length()));
         return ResponseEntity.ok().contentType(MediaType.parseMediaType(image.getFileType()))
                 .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" +image.getFileName() + "\"")
                 .body(resource);
     }
 
-    @PutMapping("/image/update/{imageId}")
-    public ResponseEntity<ApiResponse> updateImage(@PathVariable Long imageId, @RequestBody MultipartFile file) {
+    @PutMapping("/image/{id}")
+    public ResponseEntity<ApiResponse> updateImage(@PathVariable Long id, @RequestBody MultipartFile file) {
         try {
-            Image image = imageService.getImageById(imageId);
+            Image image = imageService.getImageById(id);
             if(image == null) {
-                imageService.updateImage(file, imageId);
+                imageService.updateImage(file, id);
                 return ResponseEntity.ok(new ApiResponse("Image updated successfully!", null));
             }
         } catch (ResourceNotFoundException e) {
@@ -60,12 +60,12 @@ public class ImageController {
         return ResponseEntity.status(INTERNAL_SERVER_ERROR).body(new ApiResponse("Image updated failed!", INTERNAL_SERVER_ERROR));
     }
 
-    @PutMapping("/image/delete/{imageId}")
-    public ResponseEntity<ApiResponse> deleteImage(@PathVariable Long imageId) {
+    @DeleteMapping("/image/{id}")
+    public ResponseEntity<ApiResponse> deleteImage(@PathVariable Long id) {
         try {
-            Image image = imageService.getImageById(imageId);
+            Image image = imageService.getImageById(id);
             if(image == null) {
-                imageService.deleteImageById(imageId);
+                imageService.deleteImageById(id);
                 return ResponseEntity.ok(new ApiResponse("Image deleted successfully!", null));
             }
         } catch (ResourceNotFoundException e) {
