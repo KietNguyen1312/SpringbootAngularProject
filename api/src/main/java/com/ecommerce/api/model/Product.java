@@ -1,18 +1,19 @@
 package com.ecommerce.api.model;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @Getter
 @Setter
 @NoArgsConstructor
 @Entity
+@JsonPropertyOrder({ "id", "name", "brand", "price", "inventory", "description", "category", "images" })
 public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

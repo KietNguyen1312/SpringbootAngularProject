@@ -49,7 +49,7 @@ public class ImageController {
     public ResponseEntity<ApiResponse> updateImage(@PathVariable Long id, @RequestBody MultipartFile file) {
         try {
             Image image = imageService.getImageById(id);
-            if(image == null) {
+            if(image != null) {
                 imageService.updateImage(file, id);
                 return ResponseEntity.ok(new ApiResponse("Image updated successfully!", null));
             }
@@ -64,7 +64,7 @@ public class ImageController {
     public ResponseEntity<ApiResponse> deleteImage(@PathVariable Long id) {
         try {
             Image image = imageService.getImageById(id);
-            if(image == null) {
+            if(image != null) {
                 imageService.deleteImageById(id);
                 return ResponseEntity.ok(new ApiResponse("Image deleted successfully!", null));
             }
