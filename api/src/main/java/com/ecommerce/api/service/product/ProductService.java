@@ -1,6 +1,5 @@
 package com.ecommerce.api.service.product;
 
-import com.ecommerce.api.exceptions.ProductNotFoundException;
 import com.ecommerce.api.exceptions.ResourceNotFoundException;
 import com.ecommerce.api.model.Category;
 import com.ecommerce.api.model.Product;

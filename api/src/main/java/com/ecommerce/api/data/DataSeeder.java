@@ -3,7 +3,6 @@ package com.ecommerce.api.data;
 import com.ecommerce.api.model.Category;
 import com.ecommerce.api.model.Image;
 import com.ecommerce.api.model.Product;
-import com.ecommerce.api.repository.CategoryRepository;
 import com.ecommerce.api.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -17,7 +16,6 @@ import java.util.List;
 public class DataSeeder implements CommandLineRunner {
 
     private final ProductRepository productRepository;
-    private final CategoryRepository categoryRepository;
 
     @Override
     public void run(String... args) throws Exception {
